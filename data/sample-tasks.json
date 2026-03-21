@@ -1,0 +1,34 @@
+[
+  {
+    "id": "c2f4a2d4-7c37-44b7-a30a-b3a5d2e7b501",
+    "caseId": "C-2026-014582",
+    "note": "Call customer to confirm preferred contact window for follow-up.",
+    "priority": "Normal",
+    "completed": false,
+    "createdAt": "2026-03-18T09:12:00.000Z"
+  },
+  {
+    "id": "56ccf9d0-7e75-4cbd-93de-624a1b2d8c1b",
+    "caseId": "C-2026-014610",
+    "note": "Request missing proof of address document and log receipt in the case system.",
+    "priority": "High",
+    "completed": false,
+    "createdAt": "2026-03-19T13:45:00.000Z"
+  },
+  {
+    "id": "2f6e8d1f-3d7b-47b3-9b2d-7e0b2dc2b2ad",
+    "caseId": "C-2026-014503",
+    "note": "Verify KYC screening result and record outcome in the audit note.",
+    "priority": "Urgent",
+    "completed": true,
+    "createdAt": "2026-03-17T15:05:00.000Z"
+  },
+  {
+    "id": "b94e6a0f-6b8a-4f7f-9d8d-1bf6b0c92a2a",
+    "caseId": "C-2026-014533",
+    "note": "Check inbound payment status and update the customer communication log.",
+    "priority": "Low",
+    "completed": false,
+    "createdAt": "2026-03-18T11:30:00.000Z"
+  }
+]
