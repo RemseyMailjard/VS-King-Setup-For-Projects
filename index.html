@@ -1,147 +1,140 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Case Follow-up Tracker</title>
     <link rel="stylesheet" href="./css/styles.css" />
-  </head>
-  <body>
+</head>
+
+<body>
     <a class="skip-link" href="#main">Skip to main content</a>
 
     <header class="app-header" role="banner">
-      <div class="container header-inner">
-        <div>
-          <h1 class="app-title">Case Follow-up Tracker</h1>
-          <p class="app-subtitle">Internal follow-up tasks for case handling</p>
+        <div class="container header-inner">
+            <div>
+                <h1 class="app-title">Case Follow-up Tracker</h1>
+                <p class="app-subtitle">Internal follow-up tasks for case handling</p>
+            </div>
+            <div class="header-meta" aria-label="Application status">
+                <span id="storageStatus" class="pill" aria-live="polite">Loading…</span>
+            </div>
         </div>
-        <div class="header-meta" aria-label="Application status">
-          <span id="storageStatus" class="pill" aria-live="polite">Loading…</span>
-        </div>
-      </div>
     </header>
 
     <main id="main" class="container" role="main">
-      <section class="card" aria-labelledby="addTaskHeading">
-        <div class="card-header">
-          <h2 id="addTaskHeading" class="card-title">Add follow-up task</h2>
-          <p class="card-hint">Capture a follow-up action linked to a case.</p>
-        </div>
-
-        <form id="taskForm" class="form" autocomplete="off">
-          <div class="form-grid">
-            <div class="field">
-              <label for="caseId">Case ID</label>
-              <input
-                id="caseId"
-                name="caseId"
-                type="text"
-                inputmode="text"
-                placeholder="e.g., C-2026-014582"
-                required
-              />
-              <p class="help-text">Use the internal case reference from your case system.</p>
+        <section class="card" aria-labelledby="addTaskHeading">
+            <div class="card-header">
+                <h2 id="addTaskHeading" class="card-title">Add follow-up task</h2>
+                <p class="card-hint">Capture a follow-up action linked to a case.</p>
             </div>
 
-            <div class="field">
-              <label for="priority">Priority</label>
-              <select id="priority" name="priority" required>
-                <option value="Low">Low</option>
-                <option value="Normal" selected>Normal</option>
-                <option value="High">High</option>
-                <option value="Urgent">Urgent</option>
-              </select>
-              <p class="help-text">Keep “Urgent” for time-sensitive operational follow-ups.</p>
+            <form id="taskForm" class="form" autocomplete="off">
+                <div class="form-grid">
+                    <div class="field">
+                        <label for="caseId">Case ID</label>
+                        <input id="caseId" name="caseId" type="text" inputmode="text" placeholder="e.g., C-2026-014582"
+                            required />
+                        <p class="help-text">Use the internal case reference from your case system.</p>
+                    </div>
+
+                    <div class="field">
+                        <label for="priority">Priority</label>
+                        <select id="priority" name="priority" required>
+                            <option value="Low">Low</option>
+                            <option value="Normal" selected>Normal</option>
+                            <option value="High">High</option>
+                            <option value="Urgent">Urgent</option>
+                        </select>
+                        <p class="help-text">Keep “Urgent” for time-sensitive operational follow-ups.</p>
+                    </div>
+
+                    <div class="field field-span">
+                        <label for="note">Internal note</label>
+                        <textarea id="note" name="note" rows="3"
+                            placeholder="e.g., Call customer, confirm KYC document, request missing statement"
+                            required></textarea>
+                        <p class="help-text">Write short, factual notes. Avoid sensitive data beyond what is needed.</p>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button id="addTaskButton" class="button button-primary" type="submit">Add task</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="card" aria-labelledby="filtersHeading">
+            <div class="card-header">
+                <h2 id="filtersHeading" class="card-title">Filters</h2>
+                <p class="card-hint">Narrow down tasks by status and priority.</p>
             </div>
 
-            <div class="field field-span">
-              <label for="note">Internal note</label>
-              <textarea
-                id="note"
-                name="note"
-                rows="3"
-                placeholder="e.g., Call customer, confirm KYC document, request missing statement"
-                required
-              ></textarea>
-              <p class="help-text">Write short, factual notes. Avoid sensitive data beyond what is needed.</p>
+            <div class="filters">
+                <div class="field">
+                    <label for="statusFilter">Status</label>
+                    <select id="statusFilter" name="statusFilter">
+                        <option value="All" selected>All</option>
+                        <option value="Open">Open</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="priorityFilter">Priority</label>
+                    <select id="priorityFilter" name="priorityFilter">
+                        <option value="All" selected>All</option>
+                        <option value="Low">Low</option>
+                        <option value="Normal">Normal</option>
+                        <option value="High">High</option>
+                        <option value="Urgent">Urgent</option>
+                    </select>
+                </div>
+
+                <div class="filters-summary" aria-live="polite">
+                    <span id="tasksSummary" class="muted">—</span>
+                </div>
             </div>
-          </div>
+        </section>
 
-          <div class="form-actions">
-            <button id="addTaskButton" class="button button-primary" type="submit">Add task</button>
-          </div>
-        </form>
-      </section>
+        <section class="card" aria-labelledby="tasksHeading">
+            <div class="card-header">
+                <h2 id="tasksHeading" class="card-title">Tasks</h2>
+                <p class="card-hint">Mark tasks complete once the follow-up is done.</p>
+            </div>
 
-      <section class="card" aria-labelledby="filtersHeading">
-        <div class="card-header">
-          <h2 id="filtersHeading" class="card-title">Filters</h2>
-          <p class="card-hint">Narrow down tasks by status and priority.</p>
-        </div>
+            <div id="emptyState" class="empty-state" hidden>
+                <h3 id="emptyTitle" class="empty-title">No tasks match your filters</h3>
+                <p id="emptyText" class="empty-text">Try changing the filters or add a new follow-up task.</p>
+            </div>
 
-        <div class="filters">
-          <div class="field">
-            <label for="statusFilter">Status</label>
-            <select id="statusFilter" name="statusFilter">
-              <option value="All" selected>All</option>
-              <option value="Open">Open</option>
-              <option value="Completed">Completed</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="priorityFilter">Priority</label>
-            <select id="priorityFilter" name="priorityFilter">
-              <option value="All" selected>All</option>
-              <option value="Low">Low</option>
-              <option value="Normal">Normal</option>
-              <option value="High">High</option>
-              <option value="Urgent">Urgent</option>
-            </select>
-          </div>
-
-          <div class="filters-summary" aria-live="polite">
-            <span id="tasksSummary" class="muted">—</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="card" aria-labelledby="tasksHeading">
-        <div class="card-header">
-          <h2 id="tasksHeading" class="card-title">Tasks</h2>
-          <p class="card-hint">Mark tasks complete once the follow-up is done.</p>
-        </div>
-
-        <div id="emptyState" class="empty-state" hidden>
-          <h3 class="empty-title">No tasks match your filters</h3>
-          <p class="empty-text">Try changing the filters or add a new follow-up task.</p>
-        </div>
-
-        <div class="table-wrap" role="region" aria-label="Follow-up tasks">
-          <table class="table" aria-describedby="tasksTableCaption">
-            <caption id="tasksTableCaption" class="sr-only">Follow-up tasks list</caption>
-            <thead>
-              <tr>
-                <th scope="col" class="col-status">Done</th>
-                <th scope="col">Case ID</th>
-                <th scope="col" class="col-priority">Priority</th>
-                <th scope="col">Internal note</th>
-                <th scope="col" class="col-created">Created</th>
-                <th scope="col" class="col-actions">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="taskTableBody"></tbody>
-          </table>
-        </div>
-      </section>
+            <div id="tasksRegion" class="table-wrap" role="region" aria-label="Follow-up tasks" tabindex="0">
+                <table class="table" aria-describedby="tasksTableCaption">
+                    <caption id="tasksTableCaption" class="sr-only">Follow-up tasks list</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="col-status">Completed</th>
+                            <th scope="col">Case ID</th>
+                            <th scope="col" class="col-priority">Priority</th>
+                            <th scope="col">Internal note</th>
+                            <th scope="col" class="col-created">Created</th>
+                            <th scope="col" class="col-actions">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="taskTableBody"></tbody>
+                </table>
+            </div>
+        </section>
     </main>
 
     <footer class="app-footer" role="contentinfo">
-      <div class="container footer-inner">
-        <p class="muted">Internal training app • Case Follow-up Tracker</p>
-      </div>
+        <div class="container footer-inner">
+            <p class="muted">Internal training app • Case Follow-up Tracker</p>
+        </div>
     </footer>
 
     <script src="./js/app.js" defer></script>
-  </body>
+</body>
+
 </html>
